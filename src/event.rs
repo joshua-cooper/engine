@@ -75,18 +75,17 @@ impl TryFrom<StringRecord> for Event {
             .map_err(EventError::InvalidTransactionId)?;
         let amount = event
             .get(3)
-            .map(|x| x.parse().map_err(EventError::InvalidAmount))
-            .transpose()?;
+            .map(|x| x.parse().map_err(EventError::InvalidAmount));
 
         let data = match (event_type, amount) {
             (DEPOSIT, None) | (WITHDRAWAL, None) => return Err(EventError::MissingAmount),
             (DEPOSIT, Some(amount)) => EventData::Deposit {
                 transaction_id,
-                amount,
+                amount: amount?,
             },
             (WITHDRAWAL, Some(amount)) => EventData::Withdrawal {
                 transaction_id,
-                amount,
+                amount: amount?,
             },
             (DISPUTE, _) => EventData::Dispute { transaction_id },
             (RESOLVE, _) => EventData::Resolve { transaction_id },
