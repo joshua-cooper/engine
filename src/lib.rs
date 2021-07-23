@@ -77,7 +77,7 @@ mod tests {
             type,       client, tx, amount
             deposit,    1,      1,  100.1234
             deposit,    1,      2,  20
-            dispute,    1,      2
+            dispute,    1,      2,
             chargeback, 1,      2
             withdrawal, 1,      3,  10
             deposit,    1,      4,  10
